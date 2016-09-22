@@ -132,7 +132,6 @@ class SubmitHistoryMixin(ElasticProjectInspectionReport,
     @property
     @memoized
     def es_results(self):
-        print 'es results'
         return es_query(
             params={'domain.exact': self.domain},
             q=self.filters_as_es_query(),
