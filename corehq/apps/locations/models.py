@@ -1,7 +1,7 @@
 import warnings
 from functools import partial
 
-from bulk_update.helper import bulk_update as bulk_update_helper
+# from bulk_update.helper import bulk_update as bulk_update_helper
 
 from couchdbkit import ResourceNotFound
 from dimagi.ext.couchdbkit import *
@@ -274,6 +274,13 @@ class LocationQueriesMixin(object):
             return itertools.imap(Location.wrap, locations)
         return locations
 
+    def accessible_to_user(self, domain, user):
+        if user.has_permission(domain, 'access_all_locations'):
+            return self
+
+        users_location = user.get_sql_location(domain)
+        return self & users_location.get_descendants(include_self=True)
+
 
 class LocationQuerySet(LocationQueriesMixin, models.query.QuerySet):
     def accessible_to_user(self, domain, user):
@@ -328,7 +335,6 @@ class LocationManager(LocationQueriesMixin, TreeManager):
         """
         direct_matches = self.filter_by_user_input(domain, user_input)
         return self.get_queryset_descendants(direct_matches, include_self=True)
-
 
     def accessible_to_user(self, domain, user):
         if user.has_permission(domain, 'access_all_locations'):
