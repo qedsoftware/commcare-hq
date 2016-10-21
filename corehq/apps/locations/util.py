@@ -312,17 +312,6 @@ def get_xform_location(xform):
     return None
 
 
-def get_locations_and_children(location_ids):
-    """
-    Takes a set of location ids and returns a django queryset of those
-    locations and their children.
-    """
-    return SQLLocation.objects.get_queryset_descendants(
-        SQLLocation.objects.filter(location_id__in=location_ids),
-        include_self=True
-    )
-
-
 def get_locations_from_ids(location_ids, domain, base_queryset=None):
     """
     Returns the SQLLocations with the given location_ids, ensuring
