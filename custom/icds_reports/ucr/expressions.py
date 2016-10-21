@@ -55,7 +55,9 @@ class GetAllFormsRepeatsSpec(JsonObject):
     type = TypeProperty('icds_get_all_forms_repeats')
     forms_expression = DefaultProperty(required=True)
     repeat_path = ListProperty(required=True)
-    repeat_filter = DefaultProperty(required=False)
+    repeat_filter = DefaultProperty(required=False),
+    case_id_path = ListProperty(required=True)
+    case_id_expression = DefaultProperty(required=False)
 
 
 class GetLastFormRepeatsSpec(JsonObject):
@@ -63,6 +65,8 @@ class GetLastFormRepeatsSpec(JsonObject):
     forms_expression = DefaultProperty(required=True)
     repeat_path = ListProperty(required=True)
     repeat_filter = DefaultProperty(required=False)
+    case_id_path = ListProperty(required=True)
+    case_id_expression = DefaultProperty(required=False)
 
 
 class AliveInMonthSpec(JsonObject):
@@ -433,25 +437,41 @@ def get_case_forms_by_date(spec, context):
 
 def get_all_forms_repeats(spec, context):
     GetAllFormsRepeatsSpec.wrap(spec)
-    if spec['repeat_filter'] is not None:
-        spec = {
-            'type': 'filter_items',
-            'filter_expression': spec['repeat_filter'],
-            'items_expression': {
-                'type': 'flatten',
-                'items_expression': {
-                    'type': 'map_items',
-                    'map_expression': {
-                        'type': 'property_path',
-                        'datatype': 'array',
-                        'property_path': spec['repeat_path']
-                    },
-                    'items_expression': spec['forms_expression']
-                }
+    
+    if spec['case_id_expression'] is None:
+        case_id_expression = {
+            "type": "root_doc",
+            "expression": {
+                "type": "property_name",
+                "property_name": "_id"
             }
         }
     else:
-        spec = {
+        case_id_expression = spec['case_id_expression']
+
+    repeat_filters = []
+    repeat_filters.append(
+        {
+            'type': 'boolean_expression',
+            'operator': 'eq',
+            'expression': {
+                'type': 'property_path',
+                'property_path': spec['case_id_path']
+            },
+            'property_value': case_id_expression
+        }
+    )
+
+    if spec['repeat_filter'] is not None:
+        repeat_filters.append(spec['repeat_filter'])
+    
+    spec = {
+        'type': 'filter_items',
+        'filter_expression': {
+            'type': 'and',
+            'filters': repeat_filters
+        },
+        'items_expression': {
             'type': 'flatten',
             'items_expression': {
                 'type': 'map_items',
@@ -463,6 +483,7 @@ def get_all_forms_repeats(spec, context):
                 'items_expression': spec['forms_expression']
             }
         }
+    }
     return ExpressionFactory.from_spec(spec, context)
 
 

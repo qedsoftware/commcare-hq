@@ -865,39 +865,19 @@
                     "form",
                     "child"
                   ],
+                  "case_id_path": [
+                    "case_open_child_health_3",
+                    "case",
+                    "@case_id"
+                  ],
                   "repeat_filter": {
-                    "type": "and",
-                    "filters": [
-                      {
-                        "type": "boolean_expression",
-                        "operator": "eq",
-                        "expression": {
-                          "type": "property_path",
-                          "property_path": [
-                            "case_open_child_health_3",
-                            "case",
-                            "@case_id"
-                          ]
-                        },
-                        "property_value": {
-                          "type": "root_doc",
-                          "expression": {
-                            "datatype": null,
-                            "type": "property_name",
-                            "property_name": "_id"
-                          }
-                        }
-                      },
-                      {
-                        "type": "boolean_expression",
-                        "operator": "eq",
-                        "expression": {
-                          "type": "property_name",
-                          "property_name": "breastfed_within_first_hour"
-                        },
-                        "property_value": "yes"
-                      }
-                    ]
+                    "type": "boolean_expression",
+                    "operator": "eq",
+                    "expression": {
+                      "type": "property_name",
+                      "property_name": "breastfed_within_first_hour"
+                    },
+                    "property_value": "yes"
                   }
                 }
               }
@@ -1521,46 +1501,28 @@
                     "child",
                     "item"
                   ],
+                  "case_id_path": [
+                    "@id"
+                  ],
                   "repeat_filter": {
-                    "type": "and",
+                    "type": "or",
                     "filters": [
                       {
-                        "type": "or",
-                        "filters": [
-                          {
-                            "type": "boolean_expression",
-                            "operator": "eq",
-                            "property_value": "yes",
-                            "expression": {
-                              "type": "property_name",
-                              "property_name": "counsel_exclusive_bf"
-                            }
-                          },
-                          {
-                            "type": "boolean_expression",
-                            "operator": "eq",
-                            "property_value": "yes",
-                            "expression": {
-                              "type": "property_name",
-                              "property_name": "counsel_only_milk"
-                            }
-                          }
-                        ]
+                        "type": "boolean_expression",
+                        "operator": "eq",
+                        "property_value": "yes",
+                        "expression": {
+                          "type": "property_name",
+                          "property_name": "counsel_exclusive_bf"
+                        }
                       },
                       {
                         "type": "boolean_expression",
                         "operator": "eq",
+                        "property_value": "yes",
                         "expression": {
                           "type": "property_name",
-                          "property_name": "@id"
-                        },
-                        "property_value": {
-                          "type": "root_doc",
-                          "expression": {
-                            "datatype": null,
-                            "type": "property_name",
-                            "property_name": "_id"
-                          }
+                          "property_name": "counsel_only_milk"
                         }
                       }
                     ]
@@ -1606,35 +1568,17 @@
                     "child",
                     "item"
                   ],
+                  "case_id_path": [
+                    "@id"
+                  ],
                   "repeat_filter": {
-                    "type": "and",
-                    "filters": [
-                      {
-                        "type": "boolean_expression",
-                        "operator": "eq",
-                        "property_value": "yes",
-                        "expression": {
-                          "type": "property_name",
-                          "property_name": "counsel_adequate_bf"
-                        }
-                      },
-                      {
-                        "type": "boolean_expression",
-                        "operator": "eq",
-                        "expression": {
-                          "type": "property_name",
-                          "property_name": "@id"
-                        },
-                        "property_value": {
-                          "type": "root_doc",
-                          "expression": {
-                            "datatype": null,
-                            "type": "property_name",
-                            "property_name": "_id"
-                          }
-                        }
-                      }
-                    ]
+                    "type": "boolean_expression",
+                    "operator": "eq",
+                    "property_value": "yes",
+                    "expression": {
+                      "type": "property_name",
+                      "property_name": "counsel_adequate_bf"
+                    }
                   }
                 }
               }
@@ -2360,36 +2304,18 @@
               "child_persons",
               "item"
             ],
+            "case_id_path": [
+              "child_health_case_id"
+            ],
             "repeat_filter": {
-              "type": "and",
-              "filters": [
-                {
-                  "type": "boolean_expression",
-                  "operator": "eq",
-                  "expression": {
-                    "datatype": "string",
-                    "type": "property_name",
-                    "property_name": "distribute_ration_child "
-                  },
-                  "property_value": "yes"
-                },
-                {
-                  "type": "boolean_expression",
-                  "operator": "eq",
-                  "expression": {
-                    "type": "property_name",
-                    "property_name": "child_health_case_id"
-                  },
-                  "property_value": {
-                    "type": "root_doc",
-                    "expression": {
-                      "datatype": null,
-                      "type": "property_name",
-                      "property_name": "_id"
-                    }
-                  }
-                }
-              ]
+              "type": "boolean_expression",
+              "operator": "eq",
+              "expression": {
+                "datatype": "string",
+                "type": "property_name",
+                "property_name": "distribute_ration_child "
+              },
+              "property_value": "yes"
             }
           },
           "map_expression": {
@@ -2601,39 +2527,19 @@
                   "form",
                   "child"
                 ],
+                "case_id_path": [
+                  "case_open_child_health_3",
+                  "case",
+                  "@case_id"
+                ],
                 "repeat_filter": {
-                  "type": "and",
-                  "filters": [
-                    {
-                      "type": "boolean_expression",
-                      "operator": "eq",
-                      "expression": {
-                        "type": "property_path",
-                        "property_path": [
-                          "case_open_child_health_3",
-                          "case",
-                          "@case_id"
-                        ]
-                      },
-                      "property_value": {
-                        "type": "root_doc",
-                        "expression": {
-                          "datatype": null,
-                          "type": "property_name",
-                          "property_name": "_id"
-                        }
-                      }
-                    },
-                    {
-                      "type": "boolean_expression",
-                      "operator": "eq",
-                      "expression": {
-                        "type": "property_name",
-                        "property_name": "child_birth_weight_recorded"
-                      },
-                      "property_value": "yes"
-                    }
-                  ]
+                  "type": "boolean_expression",
+                  "operator": "eq",
+                  "expression": {
+                    "type": "property_name",
+                    "property_name": "child_birth_weight_recorded"
+                  },
+                  "property_value": "yes"
                 }
               }
             },
@@ -2814,39 +2720,19 @@
                   "form",
                   "child"
                 ],
+                "case_id_path": [
+                  "case_open_child_health_3",
+                  "case",
+                  "@case_id"
+                ],
                 "repeat_filter": {
-                  "type": "and",
-                  "filters": [
-                    {
-                      "type": "boolean_expression",
-                      "operator": "eq",
-                      "expression": {
-                        "type": "property_path",
-                        "property_path": [
-                          "case_open_child_health_3",
-                          "case",
-                          "@case_id"
-                        ]
-                      },
-                      "property_value": {
-                        "type": "root_doc",
-                        "expression": {
-                          "datatype": null,
-                          "type": "property_name",
-                          "property_name": "_id"
-                        }
-                      }
-                    },
-                    {
-                      "type": "boolean_expression",
-                      "operator": "eq",
-                      "expression": {
-                        "type": "property_name",
-                        "property_name": "child_birth_weight_recorded"
-                      },
-                      "property_value": "yes"
-                    }
-                  ]
+                  "type": "boolean_expression",
+                  "operator": "eq",
+                  "expression": {
+                    "type": "property_name",
+                    "property_name": "child_birth_weight_recorded"
+                  },
+                  "property_value": "yes"
                 }
               }
             },
@@ -2917,21 +2803,9 @@
               "child",
               "item"
             ],
-            "repeat_filter": {
-              "type": "boolean_expression",
-              "operator": "eq",
-              "expression": {
-                "type": "property_name",
-                "property_name": "@id"
-              },
-              "property_value": {
-                "type": "root_doc",
-                "expression": {
-                  "type": "property_name",
-                  "property_name": "_id"
-                }
-              }
-            }
+            "case_id_path": [
+              "@id"
+            ]
           }
         },
         "value_expression": {
@@ -3149,21 +3023,9 @@
             "child",
             "item"
           ],
-          "repeat_filter": {
-            "type": "boolean_expression",
-            "operator": "eq",
-            "expression": {
-              "type": "property_name",
-              "property_name": "@id"
-            },
-            "property_value": {
-              "type": "root_doc",
-              "expression": {
-                "type": "property_name",
-                "property_name": "_id"
-              }
-            }
-          }
+          "case_id_path": [
+            "@id"
+          ]
         }
       },
       "get_latest_cf_repeat": {
@@ -3185,21 +3047,9 @@
             "child",
             "item"
           ],
-          "repeat_filter": {
-            "type": "boolean_expression",
-            "operator": "eq",
-            "expression": {
-              "type": "property_name",
-              "property_name": "@id"
-            },
-            "property_value": {
-              "type": "root_doc",
-              "expression": {
-                "type": "property_name",
-                "property_name": "_id"
-              }
-            }
-          }
+          "case_id_path": [
+            "@id"
+          ]
         }
       },
       "get_all_cf_repeats": {
@@ -3218,21 +3068,9 @@
           "child",
           "item"
         ],
-        "repeat_filter": {
-          "type": "boolean_expression",
-          "operator": "eq",
-          "expression": {
-            "type": "property_name",
-            "property_name": "@id"
-          },
-          "property_value": {
-            "type": "root_doc",
-            "expression": {
-              "type": "property_name",
-              "property_name": "_id"
-            }
-          }
-        }
+        "case_id_path": [
+          "@id"
+        ]
       },
       "get_all_pnc_repeats": {
         "type": "icds_get_all_forms_repeats",
@@ -3250,21 +3088,9 @@
           "child",
           "item"
         ],
-        "repeat_filter": {
-          "type": "boolean_expression",
-          "operator": "eq",
-          "expression": {
-            "type": "property_name",
-            "property_name": "@id"
-          },
-          "property_value": {
-            "type": "root_doc",
-            "expression": {
-              "type": "property_name",
-              "property_name": "_id"
-            }
-          }
-        }
+        "case_id_path": [
+          "@id"
+        ]
       }
     },
     "named_filters": {
