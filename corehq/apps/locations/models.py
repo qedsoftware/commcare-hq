@@ -274,13 +274,6 @@ class LocationQueriesMixin(object):
             return itertools.imap(Location.wrap, locations)
         return locations
 
-    def accessible_to_user(self, domain, user):
-        if user.has_permission(domain, 'access_all_locations'):
-            return self
-
-        users_location = user.get_sql_location(domain)
-        return self & users_location.get_descendants(include_self=True)
-
 
 class LocationQuerySet(LocationQueriesMixin, models.query.QuerySet):
     def accessible_to_user(self, domain, user):
