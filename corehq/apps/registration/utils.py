@@ -94,12 +94,16 @@ def request_new_domain(request, form, is_new_user=True):
         new_domain.name = new_domain._id
         new_domain.save()  # we need to get the name from the _id
 
-    if is_new_user:
+    #if is_new_user:
         # Only new-user domains are eligible for Advanced trial
         # domains with no subscription are equivalent to be on free Community plan
-        create_30_day_advanced_trial(new_domain, current_user.username)
-    else:
-        ensure_explicit_community_subscription(new_domain.name, date.today())
+    #    create_30_day_advanced_trial(new_domain, current_user.username)
+
+    # We give enterprise plan for everyone
+    grant_enterprise_plan(new_domain, current_user.username)
+
+    #else:
+    #    ensure_explicit_community_subscription(new_domain.name, date.today())
 
     UserRole.init_domain_with_presets(new_domain.name)
 
@@ -257,3 +261,28 @@ def create_30_day_advanced_trial(domain_obj, creating_username):
     )
     trial_subscription.is_active = True
     trial_subscription.save()
+
+def grant_enterprise_plan(domain_obj, creating_username):
+    # A modified version of the function above that grants a 100yr enterprise plan
+    enterpise_plan_version = DefaultProductPlan.get_default_plan_version(
+        edition=SoftwarePlanEdition.ENTERPRISE, is_trial=False
+    )
+    expiration_date = date.today() + timedelta(days=36500)
+    billing_account = BillingAccount.objects.get_or_create(
+        name=DEFAULT_ACCOUNT_FORMAT % domain_obj.name,
+        currency=Currency.get_default(),
+        created_by=creating_username,
+        created_by_domain=domain_obj.name,
+        account_type=BillingAccountType.USER_CREATED,
+        pre_or_post_pay=PreOrPostPay.POSTPAY,
+    )[0]
+    subscription = Subscription.new_domain_subscription(
+        billing_account, domain_obj.name, enterpise_plan_version,
+        date_end=expiration_date,
+        adjustment_method=SubscriptionAdjustmentMethod.INTERNAL,
+        is_trial=False,
+        service_type=SubscriptionType.INTERNAL
+    )
+    subscription.is_active = True
+    subscription.save()
+
